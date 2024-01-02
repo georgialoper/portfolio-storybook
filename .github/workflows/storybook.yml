@@ -1,7 +1,7 @@
 name: Build and Deploy
 on: [push]
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 jobs:
@@ -9,7 +9,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v2.3.3
+        - uses: actions/checkout@v2
+        - shell: bash
+          run: |
+            git config user.name "name"
+            git config user.email "<>"
+            git config push.default "current"
+            ./run
       - name: Install and Build 🔧
         run: | # Install packages and build the Storybook files
           yarn install
